@@ -39,7 +39,16 @@ static NSInteger listCount = 30;
 
 - (UITableViewCell *)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath {
     UITableViewCell *cell = [tableView dequeueReusableCellWithIdentifier:CSTableViewCellIdentifier forIndexPath:indexPath];
-    cell.textLabel.text = [NSString stringWithFormat:@"---->%@",[self.dataList objectAtIndex:indexPath.row]];
+    NSString *text = @"";
+    if (indexPath.row == 0) {
+        text = @"------------> 加一栏 ";
+    } else if (indexPath.row == 1) {
+        text = @"------------> 减一栏 ";
+    } else {
+        text = [NSString stringWithFormat:@"---->%@",[self.dataList objectAtIndex:indexPath.row]];
+    }
+    
+    cell.textLabel.text = text;
     return cell;
 }
 

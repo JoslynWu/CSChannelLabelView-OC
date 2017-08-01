@@ -75,6 +75,7 @@
     
     self.contentView.contentSize = CGSizeMake(CGRectGetMaxX(self.labels.lastObject.frame) + self.leadingMargin, 0);
     [self selectLabelWithIndex:0 animated:NO];
+    if (self.labelDidClick) { self.labelDidClick(0); }
     [self showBottomLine:YES];
 }
 

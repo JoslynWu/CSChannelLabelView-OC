@@ -18,7 +18,7 @@ static const CGFloat channelTitleH = 39.0;
 
 @property (nonatomic, strong) CSLabelTitleView *labelTitleView;
 @property (nonatomic, strong) UICollectionView *contentView;
-@property (nonatomic, strong) NSArray<NSString *> *labelTitles;
+@property (nonatomic, strong) NSMutableArray<NSString *> *labelTitles;
 
 
 @end
@@ -76,6 +76,11 @@ static const CGFloat channelTitleH = 39.0;
 - (UICollectionViewCell *)collectionView:(UICollectionView *)collectionView cellForItemAtIndexPath:(NSIndexPath *)indexPath {
     CSCollectionViewCell *cell =[collectionView dequeueReusableCellWithReuseIdentifier:CSViewControllerControllerCellId forIndexPath:indexPath];
     cell.labelTitle = [self.labelTitles objectAtIndex:indexPath.item];
+    __weak typeof(self) weakSelf = self;
+    cell.didSelectRowBlock = ^(NSInteger index, NSArray *data) {
+        __strong typeof(weakSelf) strongSelf = weakSelf;
+        [strongSelf updateLabelTitleWithIndex:index];
+    };
     return cell;
 }
 
@@ -85,6 +90,18 @@ static const CGFloat channelTitleH = 39.0;
 }
 
 #pragma mark  -  action
+- (void)updateLabelTitleWithIndex:(NSInteger)idx {
+    if (idx > 1) { return; }
+    if (idx == 0) {
+        [self.labelTitles addObject:[NSString stringWithFormat:@"label%02zd",self.labelTitles.count]];
+    } else {
+        if (self.labelTitles.count <= 1) { return; }
+        [self.labelTitles removeLastObject];
+    }
+    [self.labelTitleView refreshTitles:self.labelTitles];
+    [self.contentView reloadData];
+}
+
 - (void)setupUI {
     [self addLabelTitleView];
     
@@ -117,9 +134,9 @@ static const CGFloat channelTitleH = 39.0;
 }
 
 #pragma mark  -  setter / getter
-- (NSArray<NSString *> *)labelTitles {
+- (NSMutableArray<NSString *> *)labelTitles {
     if (!_labelTitles) {
-        _labelTitles = @[@"label01", @"label02", @"label03", @"label04"];
+        _labelTitles = [NSMutableArray arrayWithObjects:@"label00", @"label01", @"label02", @"label03", nil];
     }
     return _labelTitles;
 }
