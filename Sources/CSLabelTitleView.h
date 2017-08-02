@@ -11,6 +11,12 @@
 
 #import <UIKit/UIKit.h>
 
+typedef NS_ENUM(NSInteger, CSIndicatorAnimationType){
+    CSIndicatorAnimationTypeNone,       // 无动画
+    CSIndicatorAnimationTypeNormal,     // 常规动画
+    CSIndicatorAnimationTypeCrawl,      // 爬行动画
+};
+
 @interface CSLabelTitleView : UIView
 
 /** label点击回调 */
@@ -19,10 +25,9 @@
 /** 刷新titles。需要最后调用 */
 - (void)refreshTitles:(NSArray<NSString *> *)titles;
 
+/** 主动滚动到指定label。animationType指定滚动动画类型。一般代码在代码触发时调用 */
+- (void)selectLabelWithIndex:(NSInteger)index animationType:(CSIndicatorAnimationType)type;
 
-
-/** 主动滚动到指定label。animated指定是否带滚动动画。一般代码在代码触发时调用 */
-- (void)selectLabelWithIndex:(NSInteger)index animated:(BOOL)flag;
 
 
 /** 两个label之前的间距，默认0.0 */
@@ -50,6 +55,8 @@
 
 /** label的其他设置 */
 @property (nonatomic, copy) void(^otherConfig)(UILabel *label);
+
+@property (nonatomic, assign) CSIndicatorAnimationType indicatorAnimationType;
 
 
 

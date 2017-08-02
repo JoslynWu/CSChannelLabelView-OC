@@ -19,6 +19,7 @@ static const CGFloat channelTitleH = 39.0;
 @property (nonatomic, strong) CSLabelTitleView *labelTitleView;
 @property (nonatomic, strong) UICollectionView *contentView;
 @property (nonatomic, strong) NSMutableArray<NSString *> *labelTitles;
+@property (nonatomic, assign) BOOL isLabelTitleDidClick;
 
 
 @end
@@ -35,6 +36,7 @@ static const CGFloat channelTitleH = 39.0;
     [self.view addSubview:labelTitleView];
     labelTitleView.leadingMargin = 15;
     labelTitleView.middleMargin = 35;
+    labelTitleView.indicatorAnimationType = CSIndicatorAnimationTypeCrawl;
     [labelTitleView refreshTitles:self.labelTitles];
 }
 
@@ -85,8 +87,12 @@ static const CGFloat channelTitleH = 39.0;
 }
 
 - (void)scrollViewDidScroll:(UIScrollView *)scrollView {
+    if (self.isLabelTitleDidClick) {
+        self.isLabelTitleDidClick = NO;
+        return;
+    }
     NSInteger idx = (scrollView.contentOffset.x + kScreeSize.width * 0.5) / kScreeSize.width;
-    [self.labelTitleView selectLabelWithIndex:idx animated:YES];
+    [self.labelTitleView selectLabelWithIndex:idx animationType:CSIndicatorAnimationTypeCrawl];
 }
 
 #pragma mark  -  action
@@ -149,6 +155,7 @@ static const CGFloat channelTitleH = 39.0;
     self.labelTitleView.labelDidClick = ^(NSInteger index) {
         __strong typeof(weakSelf) strongSelf = weakSelf;
         if (index >= strongSelf.labelTitles.count) { return; }
+        strongSelf.isLabelTitleDidClick = YES;
         NSIndexPath *idxPath = [NSIndexPath indexPathForItem:index inSection:0];
         [strongSelf.contentView scrollToItemAtIndexPath:idxPath atScrollPosition:UICollectionViewScrollPositionNone animated:NO];
     };

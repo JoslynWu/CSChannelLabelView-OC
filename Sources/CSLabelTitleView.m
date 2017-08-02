@@ -20,6 +20,7 @@
 @property (nonatomic, assign) CGFloat totalWith;
 @property (nonatomic, assign) CGFloat middleMargin_tuning;
 @property (nonatomic, assign) CGFloat leadingMargin_tuning;
+@property (nonatomic, assign) NSInteger lastIndex;
 
 @end
 
@@ -39,10 +40,10 @@
     self.middleMargin = 0.0;
     self.leadingMargin = 0.0;
     self.titleColor = [UIColor darkTextColor];
-    self.totalWith = 0.0;
     self.scaleOfLMMargin = 0.618;
     self.selectColor = [UIColor blueColor];
     self.adjustWidth4Indicator = 0.0;
+    self.indicatorAnimationType = CSIndicatorAnimationTypeNormal;
 }
 
 - (void)setupUI {
@@ -77,7 +78,7 @@
     }
     
     self.contentView.contentSize = CGSizeMake(CGRectGetMaxX(self.labels.lastObject.frame) + self.leadingMargin_tuning, 0);
-    [self selectLabelWithIndex:0 animated:NO];
+    [self selectLabelWithIndex:0 animationType:CSIndicatorAnimationTypeNone];
     if (self.labelDidClick) { self.labelDidClick(0); }
     [self.contentView bringSubviewToFront:self.selectIndicator];
 }
@@ -119,27 +120,63 @@
     }
 }
 
-- (void)selectLabelWithIndex:(NSInteger)index animated:(BOOL)flag {
+- (void)selectLabelWithIndex:(NSInteger)index animationType:(CSIndicatorAnimationType)type {
     if (index >= self.titleWidths.count || index >= self.labels.count) { return; }
-    CGFloat title_w = [self.titleWidths objectAtIndex:index].floatValue;
+    
+    [self refreshIndicatorWithIndex:index animationType:type];
+    
     UILabel *label = [self.labels objectAtIndex:index];
-    CGFloat indicator_w = title_w + self.adjustWidth4Indicator;
-    CGFloat indicator_h = 2.0;
-    CGFloat indicator_x = CGRectGetMidX(label.frame) - indicator_w * 0.5;
-    CGRect rect = CGRectMake(indicator_x, CGRectGetHeight(self.frame) - indicator_h, indicator_w, indicator_h);
-    if (flag) {
-        [UIView animateWithDuration:0.25 animations:^{
-            self.selectIndicator.frame = rect;
-        }];
-    } else {
-        self.selectIndicator.frame = rect;
-    }
     self.lastSelectLabel.textColor = self.titleColor;
     label.textColor = self.selectColor;
     self.lastSelectLabel = label;
     self.selectIndicator.backgroundColor = self.selectColor;
     
     [self autoScrollWithIndex:index];
+}
+
+- (void)refreshIndicatorWithIndex:(NSInteger)index animationType:(CSIndicatorAnimationType)type {
+    if (self.lastIndex == index) { return; }
+    CGFloat title_w = [self.titleWidths objectAtIndex:index].floatValue;
+    UILabel *label = [self.labels objectAtIndex:index];
+
+    CGFloat indicator_h = 2.0;
+    CGFloat indicator_w = title_w + self.adjustWidth4Indicator;
+    CGFloat indicator_y = CGRectGetHeight(self.frame) - indicator_h;
+    CGFloat indicator_x = CGRectGetMidX(label.frame) - indicator_w * 0.5;
+    CGRect rect = CGRectMake(indicator_x, indicator_y, indicator_w, indicator_h);
+    
+    self.lastIndex = index;
+    
+    if (type == CSIndicatorAnimationTypeCrawl) {
+        CGFloat indicator_x_origin = CGRectGetMinX(self.selectIndicator.frame);
+        [UIView animateWithDuration:0.25 animations:^{
+            CGRect rect = self.selectIndicator.frame;
+            if (CGRectGetMinX(label.frame) >= indicator_x_origin) {
+                CGFloat indicator_w_max = CGRectGetMaxX(label.frame) + self.adjustWidth4Indicator - indicator_x_origin;
+                rect = CGRectMake(indicator_x_origin, indicator_y, indicator_w_max, indicator_h);
+            } else {
+                CGFloat indicator_w_max = CGRectGetMaxX(self.selectIndicator.frame) - CGRectGetMinX(label.frame) + self.adjustWidth4Indicator;
+                rect = CGRectMake(indicator_x, indicator_y, indicator_w_max, indicator_h);
+            }
+            self.selectIndicator.frame = rect;
+        } completion:^(BOOL finished) {
+            if (finished) {
+                [UIView animateWithDuration:0.25 animations:^{
+                    self.selectIndicator.frame = rect;
+                }];
+            }
+        }];
+        return;
+    }
+    
+    if (type == CSIndicatorAnimationTypeNormal) {
+        [UIView animateWithDuration:0.25 animations:^{
+            self.selectIndicator.frame = rect;
+        }];
+        return;
+    }
+    
+    self.selectIndicator.frame = rect;
 }
 
 - (void)autoScrollWithIndex:(NSInteger)index {
@@ -179,12 +216,13 @@
     if (self.labelDidClick) {
         self.labelDidClick(tag.view.tag);
     }
-    [self selectLabelWithIndex:tag.view.tag animated:YES];
+    [self selectLabelWithIndex:tag.view.tag animationType:self.indicatorAnimationType];
 }
 
 
 - (void)refreshTitles:(NSArray<NSString *> *)titles {
     if (titles.count <= 0) { return; }
+    self.lastIndex = -1;
     self.totalWith = 0.0;
     self.titles = titles;
     NSMutableArray *mArr = [NSMutableArray arrayWithCapacity:titles.count];
