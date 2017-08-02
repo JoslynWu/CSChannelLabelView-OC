@@ -42,7 +42,7 @@
     self.totalWith = 0.0;
     self.scaleOfLMMargin = 0.618;
     self.selectColor = [UIColor blueColor];
-    self.adjustWith4Indicator = 0.0;
+    self.adjustWidth4Indicator = 0.0;
 }
 
 - (void)setupUI {
@@ -123,7 +123,7 @@
     if (index >= self.titleWidths.count || index >= self.labels.count) { return; }
     CGFloat title_w = [self.titleWidths objectAtIndex:index].floatValue;
     UILabel *label = [self.labels objectAtIndex:index];
-    CGFloat indicator_w = title_w + self.adjustWith4Indicator;
+    CGFloat indicator_w = title_w + self.adjustWidth4Indicator;
     CGFloat indicator_h = 2.0;
     CGFloat indicator_x = CGRectGetMidX(label.frame) - indicator_w * 0.5;
     CGRect rect = CGRectMake(indicator_x, CGRectGetHeight(self.frame) - indicator_h, indicator_w, indicator_h);

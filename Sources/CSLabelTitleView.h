@@ -16,11 +16,13 @@
 /** label点击回调 */
 @property (nonatomic, copy) void(^labelDidClick)(NSInteger index);
 
-/** 主动滚动到指定label。animated指定是否带滚动动画 */
-- (void)selectLabelWithIndex:(NSInteger)index animated:(BOOL)flag;
-
 /** 刷新titles。需要最后调用 */
 - (void)refreshTitles:(NSArray<NSString *> *)titles;
+
+
+
+/** 主动滚动到指定label。animated指定是否带滚动动画。一般代码在代码触发时调用 */
+- (void)selectLabelWithIndex:(NSInteger)index animated:(BOOL)flag;
 
 
 /** 两个label之前的间距，默认0.0 */
@@ -33,7 +35,8 @@
 @property (nonatomic, assign) CGFloat scaleOfLMMargin;
 
 /** 选择指示器的调整宽度（相对于文字宽度的单边调整距离）。默认0.0 */
-@property (nonatomic, assign) CGFloat adjustWith4Indicator;
+@property (nonatomic, assign) CGFloat adjustWidth4Indicator;
+
 
 
 /** 默认15 */
@@ -47,6 +50,7 @@
 
 /** label的其他设置 */
 @property (nonatomic, copy) void(^otherConfig)(UILabel *label);
+
 
 
 /** 底部分割线的颜色，默认#f3f2f3 */
