@@ -11,7 +11,8 @@
 
 直接将Sources文件夹拖入工程中。
 
-## 使用说明
+
+## 怎么用
 
 - 建议属性设置完后，再调用刷新方法。
 
@@ -25,3 +26,12 @@
 - (void)selectLabelWithIndex:(NSInteger)index animated:(BOOL)flag;
 ```
 
+- 选择指示器支持三种动画类型
+
+```
+typedef NS_ENUM(NSInteger, CSIndicatorAnimationType){
+    CSIndicatorAnimationTypeNone,       // 无动画
+    CSIndicatorAnimationTypeNormal,     // 常规动画
+    CSIndicatorAnimationTypeCrawl,      // 爬行动画
+};
+```
