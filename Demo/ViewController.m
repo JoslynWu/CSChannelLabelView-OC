@@ -91,15 +91,36 @@ static const CGFloat channelTitleH = 39.0;
 
 #pragma mark  -  action
 - (void)updateLabelTitleWithIndex:(NSInteger)idx {
-    if (idx > 1) { return; }
+    if (idx > 2) { return; }
     if (idx == 0) {
         [self.labelTitles addObject:[NSString stringWithFormat:@"label%02zd",self.labelTitles.count]];
-    } else {
+    } else if (idx == 1) {
         if (self.labelTitles.count <= 1) { return; }
         [self.labelTitles removeLastObject];
+    } else {
+        NSMutableArray<NSString *> *mArr = [NSMutableArray arrayWithCapacity:self.labelTitles.count];
+        [self.labelTitles enumerateObjectsUsingBlock:^(NSString * _Nonnull obj, NSUInteger idx, BOOL * _Nonnull stop) {
+            [mArr addObject:[self randomStringWithMaxCharCount:8]];
+        }];
+        self.labelTitles = mArr;
     }
+    
     [self.labelTitleView refreshTitles:self.labelTitles];
     [self.contentView reloadData];
+}
+
+- (NSString *)randomStringWithMaxCharCount:(unsigned int)n {
+    NSString *chars = @"ABCDEFGHIJKLMNOPQRSTUVWXYZ";
+    NSUInteger randomCountN = arc4random_uniform(n) + 1;
+    NSMutableString *mStr = [NSMutableString stringWithCapacity:randomCountN];
+    do {
+        for (NSInteger i = 0; i < randomCountN; i++) {
+            NSUInteger randomIdx = arc4random_uniform((uint32_t)(chars.length));
+            NSString *s = [chars substringWithRange:NSMakeRange(randomIdx, 1)];
+            [mStr appendString:s];
+        }
+    } while (mStr.length <= 0);
+    return mStr.copy;
 }
 
 - (void)setupUI {

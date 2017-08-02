@@ -18,6 +18,8 @@
 @property (nonatomic, strong) UIView *selectIndicator;
 @property (nonatomic, strong) UILabel *lastSelectLabel;
 @property (nonatomic, assign) CGFloat totalWith;
+@property (nonatomic, assign) CGFloat middleMargin_tuning;
+@property (nonatomic, assign) CGFloat leadingMargin_tuning;
 
 @end
 
@@ -39,13 +41,15 @@
     self.titleColor = [UIColor darkTextColor];
     self.totalWith = 0.0;
     self.scaleOfLMMargin = 0.618;
+    self.selectColor = [UIColor blueColor];
+    self.adjustWith4Indicator = 0.0;
 }
 
 - (void)setupUI {
     self.backgroundColor = [UIColor whiteColor];
     self.labels = [NSMutableArray new];
     
-    self.bottomLine.hidden = YES;
+    self.bottomLine.hidden = NO;
     
     self.contentView = [[UIScrollView alloc] initWithFrame:self.bounds];
     [self addSubview:self.contentView];
@@ -54,18 +58,17 @@
     
     self.selectIndicator = [UIView new];
     [self.contentView addSubview:self.selectIndicator];
-    self.selectIndicator.backgroundColor = [UIColor blueColor];
 }
 
 - (void)refreshUI {
     [self clearContainer];
     [self adjustMargin];
     
-    CGFloat label_x = self.leadingMargin;
+    CGFloat label_x = self.leadingMargin_tuning;
     for (NSInteger i = 0; i < self.titleWidths.count; i++) {
         CGFloat title_w = [self.titleWidths objectAtIndex:i].floatValue;
         UILabel *label = [[UILabel alloc] initWithFrame:CGRectMake(label_x, 0, title_w, CGRectGetHeight(self.frame))];
-        label_x += title_w + self.middleMargin;
+        label_x += title_w + self.middleMargin_tuning;
         [self.contentView addSubview:label];
         [self.labels addObject:label];
         label.text = [self.titles objectAtIndex:i];
@@ -73,13 +76,15 @@
         label.tag = i;
     }
     
-    self.contentView.contentSize = CGSizeMake(CGRectGetMaxX(self.labels.lastObject.frame) + self.leadingMargin, 0);
+    self.contentView.contentSize = CGSizeMake(CGRectGetMaxX(self.labels.lastObject.frame) + self.leadingMargin_tuning, 0);
     [self selectLabelWithIndex:0 animated:NO];
     if (self.labelDidClick) { self.labelDidClick(0); }
-    [self showBottomLine:YES];
+    [self.contentView bringSubviewToFront:self.selectIndicator];
 }
 
 - (void)adjustMargin {
+    self.leadingMargin_tuning = self.leadingMargin;
+    self.middleMargin_tuning = self.middleMargin;
     CGFloat originalPlanWith = self.totalWith + self.leadingMargin * 2 + self.middleMargin * (self.titleWidths.count -1);
     if (originalPlanWith - CGRectGetWidth(self.contentView.frame) >= self.leadingMargin) {
         return;
@@ -88,8 +93,8 @@
     if (self.scaleOfLMMargin < 0) { return; }
     
     CGFloat spaceWith = CGRectGetWidth(self.contentView.frame) - self.totalWith;
-    self.middleMargin = spaceWith / ((self.titleWidths.count - 1) + 2 * self.scaleOfLMMargin);
-    self.leadingMargin = self.scaleOfLMMargin * self.middleMargin;
+    self.middleMargin_tuning = spaceWith / ((self.titleWidths.count - 1) + 2 * self.scaleOfLMMargin);
+    self.leadingMargin_tuning = self.scaleOfLMMargin * self.middleMargin_tuning;
 }
 
 - (void)clearContainer {
@@ -118,9 +123,10 @@
     if (index >= self.titleWidths.count || index >= self.labels.count) { return; }
     CGFloat title_w = [self.titleWidths objectAtIndex:index].floatValue;
     UILabel *label = [self.labels objectAtIndex:index];
+    CGFloat indicator_w = title_w + self.adjustWith4Indicator;
     CGFloat indicator_h = 2.0;
-    CGFloat indicator_x = CGRectGetMidX(label.frame) - title_w * 0.5;
-    CGRect rect = CGRectMake(indicator_x, CGRectGetHeight(self.frame) - indicator_h, title_w, indicator_h);
+    CGFloat indicator_x = CGRectGetMidX(label.frame) - indicator_w * 0.5;
+    CGRect rect = CGRectMake(indicator_x, CGRectGetHeight(self.frame) - indicator_h, indicator_w, indicator_h);
     if (flag) {
         [UIView animateWithDuration:0.25 animations:^{
             self.selectIndicator.frame = rect;
@@ -129,8 +135,9 @@
         self.selectIndicator.frame = rect;
     }
     self.lastSelectLabel.textColor = self.titleColor;
-    label.textColor = [UIColor blueColor];
+    label.textColor = self.selectColor;
     self.lastSelectLabel = label;
+    self.selectIndicator.backgroundColor = self.selectColor;
     
     [self autoScrollWithIndex:index];
 }
@@ -139,7 +146,7 @@
     UILabel *label = [self.labels objectAtIndex:index];
     CGFloat label_center_x = CGRectGetMidX(label.frame);
     CGFloat distance = label_center_x - CGRectGetMidX(self.frame);
-    CGFloat scrollDistance = self.leadingMargin;
+    CGFloat scrollDistance = self.leadingMargin_tuning;
     if (self.contentView.contentSize.width <= CGRectGetWidth(self.frame)) {
         return;
     }
@@ -147,10 +154,10 @@
         scrollDistance = 0.0;
     } else {
         for (NSNumber *w in self.titleWidths) {
-            scrollDistance += w.floatValue + self.middleMargin;
+            scrollDistance += w.floatValue + self.middleMargin_tuning;
             if (scrollDistance - distance > 0) {
-                CGFloat adjustDistance = w.floatValue + self.middleMargin;
-                scrollDistance -= adjustDistance + self.leadingMargin;
+                CGFloat adjustDistance = w.floatValue + self.middleMargin_tuning;
+                scrollDistance -= adjustDistance + self.leadingMargin_tuning;
                 if ((index + 1) < self.labels.count) {
                     UILabel *nextLabel = [self.labels objectAtIndex:(index + 1)];
                     if (CGRectGetMaxX(nextLabel.frame) - scrollDistance > CGRectGetWidth(self.frame)) {
@@ -193,20 +200,26 @@
     [self refreshUI];
 }
 
-- (void)showBottomLine:(BOOL)flag {
-    self.bottomLine.hidden = !flag;
-    [self bringSubviewToFront:self.selectIndicator];
-}
-
 #pragma mark  -  setter / getter
 - (UIView *)bottomLine {
     if (!_bottomLine) {
         CGFloat line_h = 0.5;
         _bottomLine = [[UIView alloc] initWithFrame:CGRectMake(0, CGRectGetHeight(self.frame) - line_h, CGRectGetWidth(self.frame), line_h)];
         [self addSubview:_bottomLine];
-        _bottomLine.backgroundColor = [UIColor colorWithWhite:(230 / 255) alpha:1];
+        _bottomLine.backgroundColor = [UIColor colorWithWhite:0.9 alpha:1];
     }
     return _bottomLine;
 }
+
+- (void)setSeparatorColor:(UIColor *)separatorColor {
+    _separatorColor = separatorColor;
+    self.bottomLine.backgroundColor = separatorColor;
+}
+
+- (void)setShowSeparator:(BOOL)showSeparator {
+    _showSeparator = showSeparator;
+    self.bottomLine.hidden = !showSeparator;
+}
+
 
 @end
