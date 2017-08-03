@@ -36,7 +36,7 @@ static const CGFloat channelTitleH = 39.0;
     [self.view addSubview:labelTitleView];
     labelTitleView.leadingMargin = 15;
     labelTitleView.middleMargin = 35;
-    labelTitleView.indicatorAnimationType = CSIndicatorAnimationTypeCrawl;
+    labelTitleView.indicatorAnimationType = CSIndicatorAnimationTypeRubber;
     [labelTitleView refreshTitles:self.labelTitles];
 }
 

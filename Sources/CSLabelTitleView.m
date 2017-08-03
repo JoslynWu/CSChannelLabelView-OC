@@ -126,6 +126,7 @@
     [self refreshIndicatorWithIndex:index animationType:type];
     
     UILabel *label = [self.labels objectAtIndex:index];
+    
     self.lastSelectLabel.textColor = self.titleColor;
     label.textColor = self.selectColor;
     self.lastSelectLabel = label;
@@ -135,7 +136,7 @@
 }
 
 - (void)refreshIndicatorWithIndex:(NSInteger)index animationType:(CSIndicatorAnimationType)type {
-    if (self.lastIndex == index) { return; }
+
     CGFloat title_w = [self.titleWidths objectAtIndex:index].floatValue;
     UILabel *label = [self.labels objectAtIndex:index];
 
@@ -145,11 +146,24 @@
     CGFloat indicator_x = CGRectGetMidX(label.frame) - indicator_w * 0.5;
     CGRect rect = CGRectMake(indicator_x, indicator_y, indicator_w, indicator_h);
     
+    if (type == CSIndicatorAnimationTypeRubber) {
+        CGFloat scale = 0.618;
+        self.selectIndicator.frame = rect;
+        self.selectIndicator.transform = CGAffineTransformMakeScale(scale, scale);
+        label.transform = CGAffineTransformMakeScale(scale, scale);
+        [UIView animateWithDuration:0.25 delay:0 usingSpringWithDamping:0.5 initialSpringVelocity:5 options:UIViewAnimationOptionTransitionNone animations:^{
+            label.transform = CGAffineTransformMakeScale(1.0, 1.0);
+            self.selectIndicator.transform = CGAffineTransformMakeScale(1.0, 1.0);
+        } completion:nil];
+        return;
+    }
+    
+    if (self.lastIndex == index) { return; }
     self.lastIndex = index;
     
     if (type == CSIndicatorAnimationTypeCrawl) {
         CGFloat indicator_x_origin = CGRectGetMinX(self.selectIndicator.frame);
-        [UIView animateWithDuration:0.25 animations:^{
+        [UIView animateWithDuration:0.2 animations:^{
             CGRect rect = self.selectIndicator.frame;
             if (CGRectGetMinX(label.frame) >= indicator_x_origin) {
                 CGFloat indicator_w_max = CGRectGetMaxX(label.frame) + self.adjustWidth4Indicator - indicator_x_origin;
@@ -161,7 +175,7 @@
             self.selectIndicator.frame = rect;
         } completion:^(BOOL finished) {
             if (finished) {
-                [UIView animateWithDuration:0.25 animations:^{
+                [UIView animateWithDuration:0.2 animations:^{
                     self.selectIndicator.frame = rect;
                 }];
             }
