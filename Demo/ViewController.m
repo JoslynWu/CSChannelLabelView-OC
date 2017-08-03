@@ -7,7 +7,7 @@
 //
 
 #import "ViewController.h"
-#import "CSLabelTitleView.h"
+#import "CSChannelLabelView.h"
 #import "CSCollectionViewCell.h"
 
 #define kScreeSize ([UIScreen mainScreen].bounds.size)
@@ -16,7 +16,7 @@ static const CGFloat channelTitleH = 39.0;
 
 @interface ViewController()<UICollectionViewDataSource, UICollectionViewDelegate>
 
-@property (nonatomic, strong) CSLabelTitleView *labelTitleView;
+@property (nonatomic, strong) CSChannelLabelView *labelTitleView;
 @property (nonatomic, strong) UICollectionView *contentView;
 @property (nonatomic, strong) NSMutableArray<NSString *> *labelTitles;
 @property (nonatomic, assign) BOOL isLabelTitleDidClick;
@@ -31,7 +31,7 @@ static const CGFloat channelTitleH = 39.0;
 // -------------------- CSLabelTitleView --------------------
 
 - (void)addLabelTitleView {
-    CSLabelTitleView *labelTitleView = [[CSLabelTitleView alloc] initWithFrame:CGRectMake(0, 64, kScreeSize.width, channelTitleH)];
+    CSChannelLabelView *labelTitleView = [[CSChannelLabelView alloc] initWithFrame:CGRectMake(0, 64, kScreeSize.width, channelTitleH)];
     self.labelTitleView = labelTitleView;
     [self.view addSubview:labelTitleView];
     labelTitleView.leadingMargin = 15;
@@ -92,7 +92,7 @@ static const CGFloat channelTitleH = 39.0;
         return;
     }
     NSInteger idx = (scrollView.contentOffset.x + kScreeSize.width * 0.5) / kScreeSize.width;
-    [self.labelTitleView selectLabelWithIndex:idx animationType:CSIndicatorAnimationTypeCrawl];
+    [self.labelTitleView selectChannelWithIndex:idx animationType:CSIndicatorAnimationTypeCrawl];
 }
 
 #pragma mark  -  action
@@ -152,7 +152,7 @@ static const CGFloat channelTitleH = 39.0;
     [contentView registerClass:[CSCollectionViewCell class] forCellWithReuseIdentifier:CSViewControllerControllerCellId];
     
     __weak typeof(self) weakSelf = self;
-    self.labelTitleView.labelDidClick = ^(NSInteger index) {
+    self.labelTitleView.itemDidClick = ^(NSInteger index) {
         __strong typeof(weakSelf) strongSelf = weakSelf;
         if (index >= strongSelf.labelTitles.count) { return; }
         strongSelf.isLabelTitleDidClick = YES;

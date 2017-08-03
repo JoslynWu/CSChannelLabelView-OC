@@ -2,6 +2,6 @@
 <Workspace
    version = "1.0">
    <FileRef
-      location = "self:CSLabelTitleView.xcodeproj">
+      location = "self:/Users/cs/Desktop/Repo/CSChannelLabelView-OC/CSChannelLabelView.xcodeproj">
    </FileRef>
 </Workspace>

@@ -1,11 +1,11 @@
 # CSLabelTitleView-OC
 一个轻量的文字频道View。多个频道可滚动，少量频道可适配间距。
-本版本为[Objective-C版](https://github.com/JoslynWu/CSLabelTitleView-OC.git)。
+本版本为[Objective-C版](https://github.com/JoslynWu/CSChannelLabelView-OC.git)。
 
-## Swift版入口：[CSLabelTitleView](https://github.com/JoslynWu/CSLabelTitleView)
+## Swift版入口：[CSChannelLabelView](https://github.com/JoslynWu/CSChannelLabelView)
 
 ## 效果图
-![](/Effect/CSLabelTitleView.gif)
+![](/Effect/CSChannelLabelView.gif)
 
 ## 怎么接入
 
@@ -23,7 +23,7 @@
 - 下面方法一般在代码调用时调用，例如滚动UICollectionView时需要title同时滚动
 
 ```
-- (void)selectLabelWithIndex:(NSInteger)index animated:(BOOL)flag;
+- (void)selectChannelWithIndex:(NSInteger)index animated:(BOOL)flag;
 ```
 
 - 选择指示器支持多种动画类型

@@ -1,12 +1,12 @@
 //
-//  CSLabelTitleView.h
-//  CSLabelTitleView
+//  CSChannelLabelView.h
+//  CSChannelLabelView
 //
 //  Created by Joslyn Wu on 2017/8/1.
 //  Copyright © 2017年 joslyn. All rights reserved.
 //
 // 一个轻量的文字频道View。多个频道可滚动，少量频道可适配间距。
-// https://github.com/JoslynWu/CSLabelTitleView-OC
+// https://github.com/JoslynWu/CSChannelLabelView-OC
 //
 
 #import <UIKit/UIKit.h>
@@ -18,16 +18,16 @@ typedef NS_ENUM(NSInteger, CSIndicatorAnimationType){
     CSIndicatorAnimationTypeRubber,     // 橡胶动画
 };
 
-@interface CSLabelTitleView : UIView
+@interface CSChannelLabelView : UIView
 
 /** label点击回调 */
-@property (nonatomic, copy) void(^labelDidClick)(NSInteger index);
+@property (nonatomic, copy) void(^itemDidClick)(NSInteger index);
 
 /** 刷新titles。需要最后调用 */
 - (void)refreshTitles:(NSArray<NSString *> *)titles;
 
 /** 主动滚动到指定label。animationType指定滚动动画类型。一般代码在代码触发时调用 */
-- (void)selectLabelWithIndex:(NSInteger)index animationType:(CSIndicatorAnimationType)type;
+- (void)selectChannelWithIndex:(NSInteger)index animationType:(CSIndicatorAnimationType)type;
 
 
 

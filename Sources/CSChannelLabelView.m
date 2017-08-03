@@ -1,14 +1,14 @@
 //
-//  CSLabelTitleView.m
-//  CSLabelTitleView
+//  CSChannelLabelView.m
+//  CSChannelLabelView
 //
 //  Created by Joslyn Wu on 2017/8/1.
 //  Copyright © 2017年 joslyn. All rights reserved.
 //
 
-#import "CSLabelTitleView.h"
+#import "CSChannelLabelView.h"
 
-@interface CSLabelTitleView ()
+@interface CSChannelLabelView ()
 
 @property (nonatomic, strong) NSArray<NSString *> *titles;
 @property (nonatomic, strong) NSArray<NSNumber *> *titleWidths;
@@ -24,7 +24,7 @@
 
 @end
 
-@implementation CSLabelTitleView
+@implementation CSChannelLabelView
 
 - (instancetype)initWithFrame:(CGRect)frame {
     self = [super initWithFrame:frame];
@@ -78,8 +78,8 @@
     }
     
     self.contentView.contentSize = CGSizeMake(CGRectGetMaxX(self.labels.lastObject.frame) + self.leadingMargin_tuning, 0);
-    [self selectLabelWithIndex:0 animationType:CSIndicatorAnimationTypeNone];
-    if (self.labelDidClick) { self.labelDidClick(0); }
+    [self selectChannelWithIndex:0 animationType:CSIndicatorAnimationTypeNone];
+    if (self.itemDidClick) { self.itemDidClick(0); }
     [self.contentView bringSubviewToFront:self.selectIndicator];
 }
 
@@ -120,7 +120,7 @@
     }
 }
 
-- (void)selectLabelWithIndex:(NSInteger)index animationType:(CSIndicatorAnimationType)type {
+- (void)selectChannelWithIndex:(NSInteger)index animationType:(CSIndicatorAnimationType)type {
     if (index >= self.titleWidths.count || index >= self.labels.count) { return; }
     
     [self refreshIndicatorWithIndex:index animationType:type];
@@ -227,10 +227,10 @@
 }
 
 - (void)titleDidClick:(UITapGestureRecognizer *)tag {
-    if (self.labelDidClick) {
-        self.labelDidClick(tag.view.tag);
+    if (self.itemDidClick) {
+        self.itemDidClick(tag.view.tag);
     }
-    [self selectLabelWithIndex:tag.view.tag animationType:self.indicatorAnimationType];
+    [self selectChannelWithIndex:tag.view.tag animationType:self.indicatorAnimationType];
 }
 
 

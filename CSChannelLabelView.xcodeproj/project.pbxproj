@@ -7,7 +7,7 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
-		9E0F48571F305735003BB8D1 /* CSLabelTitleView.m in Sources */ = {isa = PBXBuildFile; fileRef = 9E0F48561F305735003BB8D1 /* CSLabelTitleView.m */; };
+		9E0F48571F305735003BB8D1 /* CSChannelLabelView.m in Sources */ = {isa = PBXBuildFile; fileRef = 9E0F48561F305735003BB8D1 /* CSChannelLabelView.m */; };
 		9E0F485A1F306102003BB8D1 /* CSCollectionViewCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 9E0F48591F306102003BB8D1 /* CSCollectionViewCell.m */; };
 		9E4447471F305223001BCF78 /* AppDelegate.m in Sources */ = {isa = PBXBuildFile; fileRef = 9E44473D1F305223001BCF78 /* AppDelegate.m */; };
 		9E4447481F305223001BCF78 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 9E44473E1F305223001BCF78 /* Assets.xcassets */; };
@@ -18,11 +18,11 @@
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
-		9E0F48551F305735003BB8D1 /* CSLabelTitleView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = CSLabelTitleView.h; sourceTree = "<group>"; };
-		9E0F48561F305735003BB8D1 /* CSLabelTitleView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = CSLabelTitleView.m; sourceTree = "<group>"; };
+		9E0F48551F305735003BB8D1 /* CSChannelLabelView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = CSChannelLabelView.h; sourceTree = "<group>"; };
+		9E0F48561F305735003BB8D1 /* CSChannelLabelView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = CSChannelLabelView.m; sourceTree = "<group>"; };
 		9E0F48581F306102003BB8D1 /* CSCollectionViewCell.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = CSCollectionViewCell.h; sourceTree = "<group>"; };
 		9E0F48591F306102003BB8D1 /* CSCollectionViewCell.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = CSCollectionViewCell.m; sourceTree = "<group>"; };
-		9E4447211F30505C001BCF78 /* CSLabelTitleView.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = CSLabelTitleView.app; sourceTree = BUILT_PRODUCTS_DIR; };
+		9E4447211F30505C001BCF78 /* CSChannelLabelView.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = CSChannelLabelView.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		9E44473C1F305223001BCF78 /* AppDelegate.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = AppDelegate.h; sourceTree = "<group>"; };
 		9E44473D1F305223001BCF78 /* AppDelegate.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = AppDelegate.m; sourceTree = "<group>"; };
 		9E44473E1F305223001BCF78 /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
@@ -57,7 +57,7 @@
 		9E4447221F30505C001BCF78 /* Products */ = {
 			isa = PBXGroup;
 			children = (
-				9E4447211F30505C001BCF78 /* CSLabelTitleView.app */,
+				9E4447211F30505C001BCF78 /* CSChannelLabelView.app */,
 			);
 			name = Products;
 			sourceTree = "<group>";
@@ -91,8 +91,8 @@
 		9E44474F1F3052FE001BCF78 /* Sources */ = {
 			isa = PBXGroup;
 			children = (
-				9E0F48551F305735003BB8D1 /* CSLabelTitleView.h */,
-				9E0F48561F305735003BB8D1 /* CSLabelTitleView.m */,
+				9E0F48551F305735003BB8D1 /* CSChannelLabelView.h */,
+				9E0F48561F305735003BB8D1 /* CSChannelLabelView.m */,
 			);
 			path = Sources;
 			sourceTree = "<group>";
@@ -100,9 +100,9 @@
 /* End PBXGroup section */
 
 /* Begin PBXNativeTarget section */
-		9E4447201F30505C001BCF78 /* CSLabelTitleView */ = {
+		9E4447201F30505C001BCF78 /* CSChannelLabelView */ = {
 			isa = PBXNativeTarget;
-			buildConfigurationList = 9E4447381F30505C001BCF78 /* Build configuration list for PBXNativeTarget "CSLabelTitleView" */;
+			buildConfigurationList = 9E4447381F30505C001BCF78 /* Build configuration list for PBXNativeTarget "CSChannelLabelView" */;
 			buildPhases = (
 				9E44471D1F30505C001BCF78 /* Sources */,
 				9E44471E1F30505C001BCF78 /* Frameworks */,
@@ -112,9 +112,9 @@
 			);
 			dependencies = (
 			);
-			name = CSLabelTitleView;
+			name = CSChannelLabelView;
 			productName = CSLabelTitleView;
-			productReference = 9E4447211F30505C001BCF78 /* CSLabelTitleView.app */;
+			productReference = 9E4447211F30505C001BCF78 /* CSChannelLabelView.app */;
 			productType = "com.apple.product-type.application";
 		};
 /* End PBXNativeTarget section */
@@ -133,7 +133,7 @@
 					};
 				};
 			};
-			buildConfigurationList = 9E44471C1F30505C001BCF78 /* Build configuration list for PBXProject "CSLabelTitleView" */;
+			buildConfigurationList = 9E44471C1F30505C001BCF78 /* Build configuration list for PBXProject "CSChannelLabelView" */;
 			compatibilityVersion = "Xcode 3.2";
 			developmentRegion = English;
 			hasScannedForEncodings = 0;
@@ -146,7 +146,7 @@
 			projectDirPath = "";
 			projectRoot = "";
 			targets = (
-				9E4447201F30505C001BCF78 /* CSLabelTitleView */,
+				9E4447201F30505C001BCF78 /* CSChannelLabelView */,
 			);
 		};
 /* End PBXProject section */
@@ -170,7 +170,7 @@
 			buildActionMask = 2147483647;
 			files = (
 				9E0F485A1F306102003BB8D1 /* CSCollectionViewCell.m in Sources */,
-				9E0F48571F305735003BB8D1 /* CSLabelTitleView.m in Sources */,
+				9E0F48571F305735003BB8D1 /* CSChannelLabelView.m in Sources */,
 				9E44474D1F305223001BCF78 /* ViewController.m in Sources */,
 				9E44474C1F305223001BCF78 /* main.m in Sources */,
 				9E4447471F305223001BCF78 /* AppDelegate.m in Sources */,
@@ -316,7 +316,7 @@
 /* End XCBuildConfiguration section */
 
 /* Begin XCConfigurationList section */
-		9E44471C1F30505C001BCF78 /* Build configuration list for PBXProject "CSLabelTitleView" */ = {
+		9E44471C1F30505C001BCF78 /* Build configuration list for PBXProject "CSChannelLabelView" */ = {
 			isa = XCConfigurationList;
 			buildConfigurations = (
 				9E4447361F30505C001BCF78 /* Debug */,
@@ -325,7 +325,7 @@
 			defaultConfigurationIsVisible = 0;
 			defaultConfigurationName = Release;
 		};
-		9E4447381F30505C001BCF78 /* Build configuration list for PBXNativeTarget "CSLabelTitleView" */ = {
+		9E4447381F30505C001BCF78 /* Build configuration list for PBXNativeTarget "CSChannelLabelView" */ = {
 			isa = XCConfigurationList;
 			buildConfigurations = (
 				9E4447391F30505C001BCF78 /* Debug */,
