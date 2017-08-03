@@ -13,7 +13,7 @@
 
 typedef NS_ENUM(NSInteger, CSIndicatorAnimationType){
     CSIndicatorAnimationTypeNone,       // 无动画
-    CSIndicatorAnimationTypeNormal,     // 常规动画
+    CSIndicatorAnimationTypeSlide,      // 滑行动画
     CSIndicatorAnimationTypeCrawl,      // 爬行动画
     CSIndicatorAnimationTypeRubber,     // 橡胶动画
 };

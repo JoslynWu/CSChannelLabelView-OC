@@ -43,7 +43,7 @@
     self.scaleOfLMMargin = 0.618;
     self.selectColor = [UIColor blueColor];
     self.adjustWidth4Indicator = 0.0;
-    self.indicatorAnimationType = CSIndicatorAnimationTypeNormal;
+    self.indicatorAnimationType = CSIndicatorAnimationTypeSlide;
 }
 
 - (void)setupUI {
@@ -183,7 +183,7 @@
         return;
     }
     
-    if (type == CSIndicatorAnimationTypeNormal) {
+    if (type == CSIndicatorAnimationTypeSlide) {
         [UIView animateWithDuration:0.25 animations:^{
             self.selectIndicator.frame = rect;
         }];
