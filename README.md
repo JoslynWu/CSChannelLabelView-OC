@@ -1,4 +1,4 @@
-# CSLabelTitleView-OC
+# CSChannelLabelView-OC
 一个轻量的文字频道View。多个频道可滚动，少量频道可适配间距。
 本版本为[Objective-C版](https://github.com/JoslynWu/CSChannelLabelView-OC.git)。
 
