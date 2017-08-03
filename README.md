@@ -5,7 +5,7 @@
 ## Swift版入口：[CSLabelTitleView](https://github.com/JoslynWu/CSLabelTitleView)
 
 ## 效果图
-![](/Effect/CSLabelTitleView.png)
+![](/Effect/CSLabelTitleView.gif)
 
 ## 怎么接入
 
