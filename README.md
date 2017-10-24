@@ -16,19 +16,19 @@
 
 - 建议属性设置完后，再调用刷新方法。
 
-```
+```Objective-C
 - (void)refreshTitles:(NSArray<NSString *> *)titles;
 ```
 
 - 下面方法一般在代码调用时调用，例如滚动UICollectionView时需要title同时滚动
 
-```
+```Objective-C
 - (void)selectChannelWithIndex:(NSInteger)index animated:(BOOL)flag;
 ```
 
 - 选择指示器支持多种动画类型
 
-```
+```Objective-C
 typedef NS_ENUM(NSInteger, CSIndicatorAnimationType){
     CSIndicatorAnimationTypeNone,       // 无动画
     CSIndicatorAnimationTypeSlide,      // 滑行动画
